@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using MemAthleteServer.Models;
 using MemAthleteServer.Repositories;
+using MemAthleteServer.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -20,36 +21,43 @@ namespace MemAthleteServer.Controllers
         private readonly ILogger<AthleteController> _logger;
         
         [HttpGet]
-        public IEnumerable<Athlete> GetAll()
+        public ResponsePayload<IEnumerable<Athlete>> GetAll()
         {
             _logger.LogInformation("Get All");
-            return _athleteRepository.GetAll();
+            var res = _athleteRepository.GetAll();
+            return ResponseHandler.WrapSuccess(res);
         }
 
         [HttpGet("{athleteId}")]
-        public Athlete GetOne(string athleteId)
+        public ResponsePayload<Athlete> GetOne(string athleteId)
         {
             _logger.LogInformation("Get One");
-            return _athleteRepository.GetById(athleteId);
+            var res = _athleteRepository.GetById(athleteId);
+            return ResponseHandler.WrapSuccess(res);
         }
 
         [HttpPost]
-        public Athlete AddOne([FromBody] AthleteCreateUpdateDto athleteCreateUpdateDto)
+        public ResponsePayload<Athlete> AddOne([FromBody] AthleteCreateUpdateDto athleteCreateUpdateDto)
         {
             _logger.LogInformation("Add One");
-            return _athleteRepository.AddOne(athleteCreateUpdateDto);
+            var res = _athleteRepository.AddOne(athleteCreateUpdateDto);
+            return ResponseHandler.WrapSuccess(res);
         }
 
         [HttpPut("{athleteId}")]
-        public Athlete UpdateOne(string athleteId, [FromBody] AthleteCreateUpdateDto athleteCreateUpdateDto)
+        public ResponsePayload<Athlete> UpdateOne(string athleteId, [FromBody] AthleteCreateUpdateDto athleteCreateUpdateDto)
         {
-            return null;
+            _logger.LogInformation("Update One");
+            var res = _athleteRepository.UpdateOne(athleteId, athleteCreateUpdateDto);
+            return ResponseHandler.WrapSuccess(res);
         }
 
         [HttpDelete("{athleteId}")]
-        public string DeleteOne(string athleteId)
+        public ResponsePayload<string> DeleteOne(string athleteId)
         {
-            return null;
+            _logger.LogInformation("Delete One");
+            var res = _athleteRepository.DeleteOne(athleteId);
+            return ResponseHandler.WrapSuccess(res);
         }
     }
 }

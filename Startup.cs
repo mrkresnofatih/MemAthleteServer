@@ -41,6 +41,8 @@ namespace MemAthleteServer
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MemAthleteServer v1"));
             }
+            
+            app.UseAppExceptionHandler();//c
 
             app.UseHttpsRedirection();
 
@@ -48,7 +50,7 @@ namespace MemAthleteServer
 
             app.UseAuthorization();
             
-            app.UseAppMiddlewares();
+            app.UseAppMiddlewares();//c
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }

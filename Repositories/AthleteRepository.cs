@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using AutoMapper;
 using MemAthleteServer.Models;
@@ -26,7 +26,13 @@ namespace MemAthleteServer.Repositories
 
         public Athlete GetById(string athleteId)
         {
-            return _repository.GetValueOrDefault(athleteId);
+            var foundAthlete = _repository.GetValueOrDefault(athleteId);
+            if (foundAthlete == null)
+            {
+                throw new Exception(ErrorCodes.BadRequest);
+            }
+
+            return foundAthlete;
         }
 
         public Athlete AddOne(AthleteCreateUpdateDto athleteCreateUpdateDto)
@@ -36,6 +42,31 @@ namespace MemAthleteServer.Repositories
             newAthlete.AthleteId = newlyGeneratedId;
             _repository.Add(newlyGeneratedId, newAthlete);
             return newAthlete;
+        }
+
+        public Athlete UpdateOne(string athleteId, AthleteCreateUpdateDto athleteCreateUpdateDto)
+        {
+            var foundAthlete = _repository.GetValueOrDefault(athleteId);
+            if (foundAthlete == null)
+            {
+                throw new Exception(ErrorCodes.BadRequest);
+            }
+            var updatedAthlete = _mapper.Map<Athlete>(athleteCreateUpdateDto);
+            updatedAthlete.AthleteId = athleteId;
+            _repository[athleteId] = updatedAthlete;
+            return updatedAthlete;
+        }
+
+        public string DeleteOne(string athleteId)
+        {
+            var foundAthlete = _repository.GetValueOrDefault(athleteId);
+            if (foundAthlete == null)
+            {
+                throw new Exception(ErrorCodes.BadRequest);
+            }
+
+            _repository.Remove(athleteId);
+            return "Athlete deleted";
         }
     }
 }
