@@ -29,6 +29,7 @@ namespace MemAthleteServer
             services.AddAutomapperConfig();
             services.AddRepositories();
             services.AddShortIdGenerator();
+            services.AddMiddlewaresTransient();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +47,8 @@ namespace MemAthleteServer
             app.UseRouting();
 
             app.UseAuthorization();
+            
+            app.UseAppMiddlewares();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
