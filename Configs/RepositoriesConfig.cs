@@ -8,6 +8,7 @@ namespace MemAthleteServer.Configs
         public static void AddRepositories(this IServiceCollection services)
         {
             services.AddSingleton<AthleteRepository>();
+            services.AddSingleton<FoodRepository>();
         }
     }
 }
