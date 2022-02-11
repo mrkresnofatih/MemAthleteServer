@@ -9,6 +9,7 @@ namespace MemAthleteServer.Configs
         public AutomapperProfile()
         {
             CreateMap<Athlete, AthleteCreateUpdateDto>().ReverseMap();
+            CreateMap<Food, FoodCreateUpdateDto>().ReverseMap();
         }
     }
 

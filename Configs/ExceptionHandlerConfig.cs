@@ -19,6 +19,7 @@ namespace MemAthleteServer.Configs
                         .Get<IExceptionHandlerPathFeature>()
                         .Error;
                     var errorCode = GetErrorCode(exception);
+                    context.Response.StatusCode = 200;
                     await context.Response.WriteAsJsonAsync(ResponseHandler.WrapFailure<object>(errorCode));
                 });
             });
