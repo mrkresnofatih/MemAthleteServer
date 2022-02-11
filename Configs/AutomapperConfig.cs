@@ -11,15 +11,12 @@ namespace MemAthleteServer.Configs
             CreateMap<Athlete, AthleteCreateUpdateDto>().ReverseMap();
         }
     }
-    
+
     public static class AutomapperConfig
     {
         public static IMapper CreateIMapper()
         {
-            var mapperProfile = new MapperConfiguration(mp =>
-            {
-                mp.AddProfile(new AutomapperProfile());
-            });
+            var mapperProfile = new MapperConfiguration(mp => { mp.AddProfile(new AutomapperProfile()); });
             return mapperProfile.CreateMapper();
         }
     }

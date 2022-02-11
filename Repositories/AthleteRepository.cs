@@ -8,16 +8,17 @@ namespace MemAthleteServer.Repositories
 {
     public class AthleteRepository
     {
+        private readonly IMapper _mapper;
+        private readonly Dictionary<string, Athlete> _repository;
+
+        private readonly ShortIdGenerator _shortIdGenerator;
+
         public AthleteRepository(IMapper mapper, ShortIdGenerator shortIdGenerator)
         {
             _repository = new Dictionary<string, Athlete>();
             _mapper = mapper;
             _shortIdGenerator = shortIdGenerator;
         }
-
-        private readonly ShortIdGenerator _shortIdGenerator;
-        private readonly Dictionary<string, Athlete> _repository;
-        private readonly IMapper _mapper;
 
         public IEnumerable<Athlete> GetAll()
         {
@@ -27,10 +28,7 @@ namespace MemAthleteServer.Repositories
         public Athlete GetById(string athleteId)
         {
             var foundAthlete = _repository.GetValueOrDefault(athleteId);
-            if (foundAthlete == null)
-            {
-                throw new Exception(ErrorCodes.BadRequest);
-            }
+            if (foundAthlete == null) throw new Exception(ErrorCodes.BadRequest);
 
             return foundAthlete;
         }
@@ -47,10 +45,7 @@ namespace MemAthleteServer.Repositories
         public Athlete UpdateOne(string athleteId, AthleteCreateUpdateDto athleteCreateUpdateDto)
         {
             var foundAthlete = _repository.GetValueOrDefault(athleteId);
-            if (foundAthlete == null)
-            {
-                throw new Exception(ErrorCodes.BadRequest);
-            }
+            if (foundAthlete == null) throw new Exception(ErrorCodes.BadRequest);
             var updatedAthlete = _mapper.Map<Athlete>(athleteCreateUpdateDto);
             updatedAthlete.AthleteId = athleteId;
             _repository[athleteId] = updatedAthlete;
@@ -60,10 +55,7 @@ namespace MemAthleteServer.Repositories
         public string DeleteOne(string athleteId)
         {
             var foundAthlete = _repository.GetValueOrDefault(athleteId);
-            if (foundAthlete == null)
-            {
-                throw new Exception(ErrorCodes.BadRequest);
-            }
+            if (foundAthlete == null) throw new Exception(ErrorCodes.BadRequest);
 
             _repository.Remove(athleteId);
             return "Athlete deleted";

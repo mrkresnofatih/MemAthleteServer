@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MemAthleteServer.Attributes;
 using MemAthleteServer.Models;
 using MemAthleteServer.Repositories;
 using MemAthleteServer.Utils;
@@ -11,15 +12,15 @@ namespace MemAthleteServer.Controllers
     [Route("api/[controller]")]
     public class AthleteController : ControllerBase
     {
+        private readonly AthleteRepository _athleteRepository;
+        private readonly ILogger<AthleteController> _logger;
+
         public AthleteController(AthleteRepository athleteRepository, ILogger<AthleteController> logger)
         {
             _athleteRepository = athleteRepository;
             _logger = logger;
         }
 
-        private readonly AthleteRepository _athleteRepository;
-        private readonly ILogger<AthleteController> _logger;
-        
         [HttpGet]
         public ResponsePayload<IEnumerable<Athlete>> GetAll()
         {
@@ -37,6 +38,7 @@ namespace MemAthleteServer.Controllers
         }
 
         [HttpPost]
+        [IsModelValidFilter]
         public ResponsePayload<Athlete> AddOne([FromBody] AthleteCreateUpdateDto athleteCreateUpdateDto)
         {
             _logger.LogInformation("Add One");
@@ -45,7 +47,9 @@ namespace MemAthleteServer.Controllers
         }
 
         [HttpPut("{athleteId}")]
-        public ResponsePayload<Athlete> UpdateOne(string athleteId, [FromBody] AthleteCreateUpdateDto athleteCreateUpdateDto)
+        [IsModelValidFilter]
+        public ResponsePayload<Athlete> UpdateOne(string athleteId,
+            [FromBody] AthleteCreateUpdateDto athleteCreateUpdateDto)
         {
             _logger.LogInformation("Update One");
             var res = _athleteRepository.UpdateOne(athleteId, athleteCreateUpdateDto);
@@ -57,6 +61,15 @@ namespace MemAthleteServer.Controllers
         {
             _logger.LogInformation("Delete One");
             var res = _athleteRepository.DeleteOne(athleteId);
+            return ResponseHandler.WrapSuccess(res);
+        }
+
+        [HttpGet("GetFirstName/{athleteId}")]
+        [HasHeader("firstNameKey")]
+        public ResponsePayload<string> GetFirstName(string athleteId)
+        {
+            _logger.LogInformation("Get First Name");
+            var res = _athleteRepository.GetById(athleteId).FirstName;
             return ResponseHandler.WrapSuccess(res);
         }
     }
