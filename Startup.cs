@@ -20,12 +20,15 @@ namespace MemAthleteServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().ConfigureApiBehaviorOptions(opt =>
+            {
+                opt.SuppressModelStateInvalidFilter = true;
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "MemAthleteServer", Version = "v1"});
             });
-            
+
             services.AddAutomapperConfig();
             services.AddRepositories();
             services.AddShortIdGenerator();
@@ -41,16 +44,16 @@ namespace MemAthleteServer
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MemAthleteServer v1"));
             }
-            
-            app.UseAppExceptionHandler();//c
+
+            app.UseAppExceptionHandler(); //c
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseAuthorization();
-            
-            app.UseAppMiddlewares();//c
+
+            app.UseAppMiddlewares(); //c
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }

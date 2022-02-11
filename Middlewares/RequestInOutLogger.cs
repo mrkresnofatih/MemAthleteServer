@@ -6,12 +6,12 @@ namespace MemAthleteServer.Middlewares
 {
     public class RequestInOutLogger : IMiddleware
     {
+        private readonly ILogger<RequestInOutLogger> _logger;
+
         public RequestInOutLogger(ILogger<RequestInOutLogger> logger)
         {
             _logger = logger;
         }
-        
-        private readonly ILogger<RequestInOutLogger> _logger;
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {

@@ -5,8 +5,8 @@ namespace MemAthleteServer.Utils
 {
     public class ShortIdGenerator
     {
-        private GenerationOptions _generationOptions;
-        
+        private readonly GenerationOptions _generationOptions;
+
         public ShortIdGenerator()
         {
             _generationOptions = new GenerationOptions
