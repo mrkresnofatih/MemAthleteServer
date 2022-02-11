@@ -72,5 +72,14 @@ namespace MemAthleteServer.Controllers
             var res = _athleteRepository.GetById(athleteId).FirstName;
             return ResponseHandler.WrapSuccess(res);
         }
+
+        [HttpGet("GetClub/{athleteId}")]
+        [AuthHeaderFilter("getClub")]
+        public ResponsePayload<string> GetClub(string athleteId)
+        {
+            _logger.LogInformation("Get Club");
+            var res = _athleteRepository.GetById(athleteId).Club;
+            return ResponseHandler.WrapSuccess(res);
+        }
     }
 }
