@@ -10,6 +10,7 @@ namespace MemAthleteServer.Configs
         {
             CreateMap<Athlete, AthleteCreateUpdateDto>().ReverseMap();
             CreateMap<Food, FoodCreateUpdateDto>().ReverseMap();
+            CreateMap<Player, PlayerCreateUpdateDto>().ReverseMap();
         }
     }
 

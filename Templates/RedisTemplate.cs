@@ -6,12 +6,12 @@ namespace MemAthleteServer.Templates
 {
     public abstract class RedisTemplate<T> where T : class
     {
+        private readonly IDatabase _redisDb;
+
         protected RedisTemplate(IDatabase redisDb)
         {
             _redisDb = redisDb;
         }
-
-        private readonly IDatabase _redisDb;
 
         protected abstract string GetPrefix();
 

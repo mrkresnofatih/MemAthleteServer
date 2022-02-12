@@ -1,9 +1,11 @@
 ﻿using System;
 using System.IO;
+using JWT.Exceptions;
 using MemAthleteServer.Utils;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace MemAthleteServer.Configs
 {
@@ -29,6 +31,15 @@ namespace MemAthleteServer.Configs
         {
             switch (exception)
             {
+                case FormatException:
+                case JsonReaderException:
+                {
+                    return ErrorCodes.BadRequest;
+                }
+                case SignatureVerificationException:
+                {
+                    return ErrorCodes.InvalidCredential;
+                }
                 case FileNotFoundException:
                 {
                     return ErrorCodes.FileNotFound;

@@ -75,6 +75,7 @@ namespace MemAthleteServer.Controllers
 
         [HttpGet("GetClub/{athleteId}")]
         [AuthHeaderFilter("getClub")]
+        [RequireAuthenticationFilter]
         public ResponsePayload<string> GetClub(string athleteId)
         {
             _logger.LogInformation("Get Club");

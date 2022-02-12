@@ -6,12 +6,12 @@ namespace MemAthleteServer.Attributes
 {
     public class AuthHeaderFilterAttribute : Attribute, IAsyncActionFilter
     {
+        private readonly string _authHeaderValue;
+
         public AuthHeaderFilterAttribute(string authHeaderValue)
         {
             _authHeaderValue = authHeaderValue;
         }
-
-        private readonly string _authHeaderValue;
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
@@ -19,15 +19,11 @@ namespace MemAthleteServer.Attributes
             if (isAuthHeaderExists)
             {
                 var authHeaderValue = context.HttpContext.Request.Headers["auth"];
-                var isAuthHeaderCorrect = (_authHeaderValue == authHeaderValue);
+                var isAuthHeaderCorrect = _authHeaderValue == authHeaderValue;
                 if (isAuthHeaderCorrect)
-                {
                     await next();
-                }
                 else
-                {
                     throw new Exception(ErrorCodes.InternalError);
-                }
             }
             else
             {

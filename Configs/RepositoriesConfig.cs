@@ -9,6 +9,7 @@ namespace MemAthleteServer.Configs
         {
             services.AddSingleton<AthleteRepository>();
             services.AddSingleton<FoodRepository>();
+            services.AddSingleton<PlayerRepository>();
         }
     }
 }

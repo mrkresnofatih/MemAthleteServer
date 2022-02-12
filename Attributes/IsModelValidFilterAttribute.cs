@@ -8,10 +8,7 @@ namespace MemAthleteServer.Attributes
         public void OnActionExecuting(ActionExecutingContext context)
         {
             var isModelValid = context.ModelState.IsValid;
-            if (!isModelValid)
-            {
-                throw new Exception(ErrorCodes.BadRequest);
-            }
+            if (!isModelValid) throw new Exception(ErrorCodes.BadRequest);
         }
 
         public void OnActionExecuted(ActionExecutedContext context)

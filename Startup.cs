@@ -20,10 +20,8 @@ namespace MemAthleteServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers().ConfigureApiBehaviorOptions(opt =>
-            {
-                opt.SuppressModelStateInvalidFilter = true;
-            });
+            services.AddControllers()
+                .ConfigureApiBehaviorOptions(opt => { opt.SuppressModelStateInvalidFilter = true; });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "MemAthleteServer", Version = "v1"});
@@ -34,6 +32,7 @@ namespace MemAthleteServer
             services.AddShortIdGenerator();
             services.AddMiddlewaresTransient();
             services.AddRedisService();
+            services.AddBcryptUtils();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

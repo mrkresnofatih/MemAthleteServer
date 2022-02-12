@@ -1,4 +1,5 @@
 ﻿using MemAthleteServer.Attributes;
+using MemAthleteServer.Constants;
 using MemAthleteServer.Models;
 using MemAthleteServer.Repositories;
 using MemAthleteServer.Utils;
@@ -11,8 +12,8 @@ namespace MemAthleteServer.Controllers
     [Route("api/[controller]")]
     public class FoodController
     {
-        private readonly ILogger<FoodController> _logger;
         private readonly FoodRepository _foodRepository;
+        private readonly ILogger<FoodController> _logger;
 
         public FoodController(FoodRepository foodRepository, ILogger<FoodController> logger)
         {
@@ -21,6 +22,8 @@ namespace MemAthleteServer.Controllers
         }
 
         [HttpGet("{foodId}")]
+        [RequireAuthenticationFilter]
+        [AuthorizeByPolicy(AppAuthorizationPolicies.BornInEarly1990s)]
         public ResponsePayload<Food> GetOne(string foodId)
         {
             _logger.LogInformation("Get One");

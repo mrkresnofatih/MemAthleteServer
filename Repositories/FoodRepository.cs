@@ -9,14 +9,15 @@ namespace MemAthleteServer.Repositories
 {
     public class FoodRepository : RedisTemplate<Food>
     {
+        private readonly IMapper _mapper;
+
+        private readonly ShortIdGenerator _shortIdGenerator;
+
         public FoodRepository(IDatabase redisDb, ShortIdGenerator shortIdGenerator, IMapper mapper) : base(redisDb)
         {
             _shortIdGenerator = shortIdGenerator;
             _mapper = mapper;
         }
-
-        private readonly ShortIdGenerator _shortIdGenerator;
-        private readonly IMapper _mapper;
 
         protected override string GetPrefix()
         {
@@ -25,7 +26,7 @@ namespace MemAthleteServer.Repositories
 
         protected override TimeSpan GetLifeTime()
         {
-            return TimeSpan.FromMinutes(3);
+            return TimeSpan.FromMinutes(10);
         }
 
         public Food SaveOne(FoodCreateUpdateDto foodCreateUpdateDto)
@@ -40,10 +41,7 @@ namespace MemAthleteServer.Repositories
         public Food GetOne(string foodId)
         {
             var foundFood = GetById(foodId);
-            if (foundFood != null)
-            {
-                return foundFood;
-            }
+            if (foundFood != null) return foundFood;
             throw new Exception(ErrorCodes.BadRequest);
         }
 
@@ -55,6 +53,7 @@ namespace MemAthleteServer.Repositories
                 DeleteById(foodId);
                 return foodId;
             }
+
             throw new Exception(ErrorCodes.BadRequest);
         }
     }

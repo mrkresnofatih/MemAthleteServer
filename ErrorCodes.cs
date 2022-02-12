@@ -2,8 +2,9 @@
 {
     public static class ErrorCodes
     {
-        public static string BadRequest = "#1000";
-        public static string InternalError = "#4000";
-        public static string FileNotFound = "#3000";
+        public const string BadRequest = "#1000";
+        public const string InternalError = "#4000";
+        public const string FileNotFound = "#3000";
+        public const string InvalidCredential = "#2500";
     }
 }
