@@ -1,4 +1,5 @@
 ﻿using MemAthleteServer.Attributes;
+using MemAthleteServer.Constants;
 using MemAthleteServer.Models;
 using MemAthleteServer.Repositories;
 using MemAthleteServer.Utils;
@@ -21,6 +22,8 @@ namespace MemAthleteServer.Controllers
         }
 
         [HttpGet("{foodId}")]
+        [RequireAuthenticationFilter]
+        [AuthorizeByPolicy(AppAuthorizationPolicies.BornInEarly1990s)]
         public ResponsePayload<Food> GetOne(string foodId)
         {
             _logger.LogInformation("Get One");

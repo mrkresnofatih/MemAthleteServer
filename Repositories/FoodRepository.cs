@@ -26,7 +26,7 @@ namespace MemAthleteServer.Repositories
 
         protected override TimeSpan GetLifeTime()
         {
-            return TimeSpan.FromMinutes(3);
+            return TimeSpan.FromMinutes(10);
         }
 
         public Food SaveOne(FoodCreateUpdateDto foodCreateUpdateDto)
