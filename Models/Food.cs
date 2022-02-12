@@ -12,15 +12,10 @@ namespace MemAthleteServer.Models
 
     public class FoodCreateUpdateDto
     {
-        [Required]
-        [StringLength(20)]
-        public string Name { get; set; }
-        
-        [Required]
-        [Range(50, 500)]
-        public int Calories { get; set; }
-        
-        [Required]
-        public bool IsSnack { get; set; }
+        [Required] [StringLength(20)] public string Name { get; set; }
+
+        [Required] [Range(50, 500)] public int Calories { get; set; }
+
+        [Required] public bool IsSnack { get; set; }
     }
 }

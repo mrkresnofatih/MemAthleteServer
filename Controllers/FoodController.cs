@@ -11,8 +11,8 @@ namespace MemAthleteServer.Controllers
     [Route("api/[controller]")]
     public class FoodController
     {
-        private readonly ILogger<FoodController> _logger;
         private readonly FoodRepository _foodRepository;
+        private readonly ILogger<FoodController> _logger;
 
         public FoodController(FoodRepository foodRepository, ILogger<FoodController> logger)
         {
