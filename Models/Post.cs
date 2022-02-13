@@ -21,10 +21,7 @@ namespace MemAthleteServer.Models
         [Required]
         [Range(5, 20)]
         public int Likes { get; set; }
-        
-        [Required]
-        public string Hyperlink { get; set; }
-        
+
         [Required]
         public int Dislikes { get; set; }
         
@@ -45,9 +42,6 @@ namespace MemAthleteServer.Models
         [Required]
         [Range(5, 20)]
         public int Likes { get; set; }
-        
-        [Required]
-        public string Hyperlink { get; set; }
 
         [Required]
         public int Dislikes { get; set; }
