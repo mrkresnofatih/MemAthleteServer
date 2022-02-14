@@ -7,7 +7,7 @@ namespace MemAthleteServer.Configs
     {
         public static ConnectionMultiplexer CreateConnectionMultiplexer()
         {
-            const string connectionAddress = "localhost:7001";
+            const string connectionAddress = "localhost:7001,abortConnect=false";
             return ConnectionMultiplexer.Connect(connectionAddress);
         }
     }

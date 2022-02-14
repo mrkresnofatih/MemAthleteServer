@@ -1,4 +1,5 @@
 using MemAthleteServer.Configs;
+using MemAthleteServer.DatabaseContexts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -22,6 +23,7 @@ namespace MemAthleteServer
         {
             services.AddControllers()
                 .ConfigureApiBehaviorOptions(opt => { opt.SuppressModelStateInvalidFilter = true; });
+            services.AddFacebookDbContext();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "MemAthleteServer", Version = "v1"});
