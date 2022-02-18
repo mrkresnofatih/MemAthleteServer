@@ -1,3 +1,4 @@
+using System;
 using MemAthleteServer.Configs;
 using MemAthleteServer.DatabaseContexts;
 using Microsoft.AspNetCore.Builder;
@@ -5,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace MemAthleteServer
@@ -38,10 +40,13 @@ namespace MemAthleteServer
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
         {
+            var appKey = Configuration["Appkey"];
+            logger.LogInformation(appKey);
             if (env.IsDevelopment())
             {
+                logger.LogWarning("Running Development Env!");
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MemAthleteServer v1"));

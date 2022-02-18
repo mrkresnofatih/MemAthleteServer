@@ -4,6 +4,7 @@ using MemAthleteServer.Models;
 using MemAthleteServer.Repositories;
 using MemAthleteServer.Utils;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace MemAthleteServer.Controllers
@@ -15,10 +16,11 @@ namespace MemAthleteServer.Controllers
         private readonly ILogger<PostController> _logger;
         private readonly PostRepository _postRepository;
 
-        public PostController(PostRepository postRepository, ILogger<PostController> logger)
+        public PostController(IConfiguration configuration, PostRepository postRepository, ILogger<PostController> logger)
         {
             _logger = logger;
             _postRepository = postRepository;
+            _logger.LogInformation(configuration["AppKey"]);
         }
         
         [HttpGet]
